@@ -1,0 +1,26 @@
+{:duct.profile/base
+ {:duct.core/project-ns ms-server
+
+  :ms-server.resolver.hello/get-world {}
+  :ms-server.resolver.member/get-members {}}
+
+ :duct.profile/dev   #duct/include "dev"
+ :duct.profile/local #duct/include "local"
+ :duct.profile/prod  {}
+
+ :duct.module/logging {}
+
+ :duct.module/lacinia
+ {:graphiql {:endpoint "/graphiql"}
+  :middleware []
+  :schema {:objects
+           {:member
+            {:fields {:name {:type String}
+                      :introduction1 {:type String}
+                      :introduction2 {:type String}
+                      :introduction3 {:type String}}}}
+
+           :queries
+           {:members {:type (list :member)
+                      :args {:grade {:type String}}
+                      :resolve :member/get-members}}}}}
